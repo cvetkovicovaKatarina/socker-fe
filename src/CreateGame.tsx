@@ -1,22 +1,11 @@
-import axios from "axios"
-import styled from "styled-components"
+import styled from 'styled-components'
 
-const CreateGame = () => {
-	const handleCreateGame = () => {
-		axios.post('/game', {
-			userId: '1234',
-		  })
-		  .then((response) => {
-			console.log(response);
-		  })
-		  .catch((error) => {
-			console.log(error);
-		  });
-	}
+interface IProps {
+	handleCreateGame: () => void
+}
 
-	return(
-		<StyledButton onClick={() => handleCreateGame()}>Create game</StyledButton>
-	)
+const CreateGame = (props: IProps) => {
+	return <StyledButton onClick={props.handleCreateGame}>Create game</StyledButton>
 }
 
 const StyledButton = styled.button`
@@ -28,6 +17,6 @@ const StyledButton = styled.button`
 	outline: none;
 	border-radius: 5px;
 	text-align: center;
-`
+`;
 
-export default CreateGame
+export default CreateGame;

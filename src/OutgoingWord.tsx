@@ -1,17 +1,12 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 interface IProps {
-	setOutgoingWord: (word: string) => void
-	outgoingWord: string
+	setOutgoingWord: (word: string) => void;
+	outgoingWord: string;
 }
-const OutgoingWord = (props: IProps) => {	
-	return (
-		<StyledInput
-			value={props.outgoingWord}
-			onChange={(event) => props.setOutgoingWord(event.target.value)}
-		/>
-	)
-}
+const OutgoingWord = (props: IProps) => {
+	return <StyledInput value={props.outgoingWord} onChange={event => props.setOutgoingWord(event.target.value)} />;
+};
 
 const StyledInput = styled.input`
 	width: 200px;
@@ -19,7 +14,7 @@ const StyledInput = styled.input`
 	outline: none;
 	border-radius: 5px;
 	border: 2px solid #e84118;
-	text-align: center; 
-`
+	text-align: center;
+`;
 
-export default OutgoingWord
+export default OutgoingWord;
