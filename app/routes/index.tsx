@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import styled from 'styled-components'
-import CreateGame from './CreateGame'
-import WordsPart from './WordsPart'
-import PlayersPart from './PlayersPart'
+import CreateGame from '../components/CreateGame'
+import WordsPart from '../components/WordsPart'
+import PlayersPart from '../components/PlayersPart'
 
 const user = {
 	name: 'Kata',
@@ -30,7 +30,8 @@ export const UserContext = React.createContext(userContext)
 function App() {
 	const [isWordsPartVisible, setIsWordsPartVisible] = useState(false)
 	const [isPlayersPartVisible, setIsPlayersPartVisible] = useState(false)
-	const [word, setWord] = useState<string | undefined>(undefined)
+	const [outGoingWord, setOutGoingWord] = useState<string>('')
+	const [outIncomingWord, setOutIncomingWord] = useState<string>('')
 
 	const setOutgoingWord = (word: string) => {
 
@@ -56,8 +57,8 @@ function App() {
 		<UserContext.Provider value={userContext}>
 			<AppContainer>
 				<CreateGame handleCreateGame={handleCreateGame} />
-				<WordsPart setOutgoingWord={setOutgoingWord}/>
-				<PlayersPart />
+				{isPlayersPartVisible && <PlayersPart />}
+				{isWordsPartVisible && <WordsPart setOutgoingWord={setOutgoingWord}/>}
 			</AppContainer>
 		</UserContext.Provider>
 	)
