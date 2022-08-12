@@ -5,33 +5,17 @@ import IncomingWord from './IncomingWord';
 import OutgoingWord from './OutgoingWord';
 
 interface IProps {
+	outgoingWord: string
 	setOutgoingWord: (word: string) => void
 }
 
 const WordPart = (props: IProps) => {
 	const [incomingWord, setIncomingWord] = useState('');
-	const [outgoingWord, setOutgoingWord] = useState('');
-
-	const onSendWord = (word: string) => {
-		axios
-			.post('http://localhost:8080/word', {
-				params: {
-					userId: 1234,
-					word,
-				},
-			})
-			.then(function (response) {
-				setOutgoingWord(word);
-			})
-			.catch(function (error) {
-				console.log(error);
-			});
-	};
 
 	return (
 		<Container>
 			{incomingWord && <IncomingWord setIncomingWord={setIncomingWord} incomingWord={incomingWord} />}
-			<OutgoingWord setOutgoingWord={setOutgoingWord} outgoingWord={outgoingWord} />
+			<OutgoingWord setOutgoingWord={props.setOutgoingWord} outgoingWord={props.outgoingWord} />
 		</Container>
 	);
 };

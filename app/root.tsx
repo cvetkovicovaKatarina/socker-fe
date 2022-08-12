@@ -1,4 +1,4 @@
-import { Outlet } from "@remix-run/react";
+import { Outlet, Scripts } from "@remix-run/react";
 
 export default function Root() {
   return (
@@ -17,10 +17,12 @@ export default function Root() {
         />
         <link rel="apple-touch-icon" href="/logo192.png" />
         <title>Socker-fe</title>
+        {typeof document === "undefined" ? "__STYLES__" : null}
       </head>
       <body>
         <div id="root">
           <Outlet />
+          <Scripts />
         </div>
       </body>
     </html>

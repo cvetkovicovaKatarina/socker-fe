@@ -42,13 +42,17 @@ var entry_server_exports = {};
 __export(entry_server_exports, {
   default: () => handleRequest
 });
-var import_react = require("@remix-run/react");
-var import_server = require("react-dom/server");
+var import_server = require("@remix-run/react/server");
+var import_server2 = __toESM(require("react-dom/server"));
+var import_styled_components = require("styled-components");
 function handleRequest(request, responseStatusCode, responseHeaders, remixContext) {
-  let markup = (0, import_server.renderToString)(/* @__PURE__ */ React.createElement(import_react.RemixServer, {
+  const sheet = new import_styled_components.ServerStyleSheet();
+  let markup = import_server2.default.renderToString(sheet.collectStyles(/* @__PURE__ */ React.createElement(import_server.RemixServer, {
     context: remixContext,
     url: request.url
-  }));
+  })));
+  const styles = sheet.getStyleTags();
+  markup = markup.replace("__STYLES__", styles);
   responseHeaders.set("Content-Type", "text/html");
   return new Response("<!DOCTYPE html>" + markup, {
     status: responseStatusCode,
@@ -61,7 +65,7 @@ var root_exports = {};
 __export(root_exports, {
   default: () => Root
 });
-var import_react2 = require("@remix-run/react");
+var import_react = require("@remix-run/react");
 function Root() {
   return /* @__PURE__ */ React.createElement("html", {
     lang: "en"
@@ -82,9 +86,9 @@ function Root() {
   }), /* @__PURE__ */ React.createElement("link", {
     rel: "apple-touch-icon",
     href: "/logo192.png"
-  }), /* @__PURE__ */ React.createElement("title", null, "Socker-fe")), /* @__PURE__ */ React.createElement("body", null, /* @__PURE__ */ React.createElement("div", {
+  }), /* @__PURE__ */ React.createElement("title", null, "Socker-fe"), typeof document === "undefined" ? "__STYLES__" : null), /* @__PURE__ */ React.createElement("body", null, /* @__PURE__ */ React.createElement("div", {
     id: "root"
-  }, /* @__PURE__ */ React.createElement(import_react2.Outlet, null))));
+  }, /* @__PURE__ */ React.createElement(import_react.Outlet, null), /* @__PURE__ */ React.createElement(import_react.Scripts, null))));
 }
 
 // route:/Users/katarinacvetkovicova/workspace/socker-fe/app/routes/index.tsx
@@ -93,17 +97,17 @@ __export(routes_exports, {
   UserContext: () => UserContext,
   default: () => routes_default
 });
-var import_react5 = __toESM(require("react"));
-var import_styled_components5 = __toESM(require("styled-components"));
+var import_react4 = __toESM(require("react"));
+var import_styled_components6 = __toESM(require("styled-components"));
 
 // app/components/CreateGame.tsx
-var import_styled_components = __toESM(require("styled-components"));
+var import_styled_components2 = __toESM(require("styled-components"));
 var CreateGame = (props) => {
   return /* @__PURE__ */ React.createElement(StyledButton, {
     onClick: props.handleCreateGame
   }, "Create game");
 };
-var StyledButton = import_styled_components.default.button`
+var StyledButton = import_styled_components2.default.button`
 	margin-left: auto;
 	margin-right: auto;
 	display: block;
@@ -117,26 +121,26 @@ var CreateGame_default = CreateGame;
 
 // app/components/WordsPart.tsx
 var import_axios = __toESM(require("axios"));
-var import_react3 = require("react");
-var import_styled_components4 = __toESM(require("styled-components"));
+var import_react2 = require("react");
+var import_styled_components5 = __toESM(require("styled-components"));
 
 // app/components/IncomingWord.tsx
-var import_styled_components2 = __toESM(require("styled-components"));
+var import_styled_components3 = __toESM(require("styled-components"));
 var IncomingWord = (props) => /* @__PURE__ */ React.createElement(StyledWord, null, props.incomingWord);
-var StyledWord = import_styled_components2.default.p`
+var StyledWord = import_styled_components3.default.p`
 	text-align: center;
 `;
 var IncomingWord_default = IncomingWord;
 
 // app/components/OutgoingWord.tsx
-var import_styled_components3 = __toESM(require("styled-components"));
+var import_styled_components4 = __toESM(require("styled-components"));
 var OutgoingWord = (props) => {
   return /* @__PURE__ */ React.createElement(StyledInput, {
     value: props.outgoingWord,
     onChange: (event) => props.setOutgoingWord(event.target.value)
   });
 };
-var StyledInput = import_styled_components3.default.input`
+var StyledInput = import_styled_components4.default.input`
 	width: 200px;
 	padding: 6px 12px;
 	outline: none;
@@ -148,8 +152,8 @@ var OutgoingWord_default = OutgoingWord;
 
 // app/components/WordsPart.tsx
 var WordPart = (props) => {
-  const [incomingWord, setIncomingWord] = (0, import_react3.useState)("");
-  const [outgoingWord, setOutgoingWord] = (0, import_react3.useState)("");
+  const [incomingWord, setIncomingWord] = (0, import_react2.useState)("");
+  const [outgoingWord, setOutgoingWord] = (0, import_react2.useState)("");
   const onSendWord = (word) => {
     import_axios.default.post("http://localhost:8080/word", {
       params: {
@@ -170,16 +174,16 @@ var WordPart = (props) => {
     outgoingWord
   }));
 };
-var Container = import_styled_components4.default.div`
+var Container = import_styled_components5.default.div`
 	margin-left: auto;
 	margin-right: auto;
 `;
 var WordsPart_default = WordPart;
 
 // app/components/PlayersPart.tsx
-var import_react4 = __toESM(require("react"));
+var import_react3 = __toESM(require("react"));
 var PlayersPart = () => {
-  return /* @__PURE__ */ import_react4.default.createElement(import_react4.default.Fragment, null);
+  return /* @__PURE__ */ import_react3.default.createElement(import_react3.default.Fragment, null);
 };
 var PlayersPart_default = PlayersPart;
 
@@ -188,26 +192,27 @@ var initialUserContext = {
   userName: ""
 };
 var userContext = initialUserContext;
-var UserContext = import_react5.default.createContext(userContext);
+var UserContext = import_react4.default.createContext(userContext);
 function App() {
-  const [isWordsPartVisible, setIsWordsPartVisible] = (0, import_react5.useState)(false);
-  const [isPlayersPartVisible, setIsPlayersPartVisible] = (0, import_react5.useState)(false);
-  const [outGoingWord, setOutGoingWord] = (0, import_react5.useState)("");
-  const [outIncomingWord, setOutIncomingWord] = (0, import_react5.useState)("");
+  const [isWordsPartVisible, setIsWordsPartVisible] = (0, import_react4.useState)(false);
+  const [isPlayersPartVisible, setIsPlayersPartVisible] = (0, import_react4.useState)(false);
+  const [outGoingWord, setOutGoingWord] = (0, import_react4.useState)("");
+  const [outIncomingWord, setOutIncomingWord] = (0, import_react4.useState)("");
   const setOutgoingWord = (word) => {
   };
   const handleCreateGame = () => {
     setIsWordsPartVisible(true);
+    console.log("deje se to");
   };
-  return /* @__PURE__ */ import_react5.default.createElement(UserContext.Provider, {
+  return /* @__PURE__ */ import_react4.default.createElement(UserContext.Provider, {
     value: userContext
-  }, /* @__PURE__ */ import_react5.default.createElement(AppContainer, null, /* @__PURE__ */ import_react5.default.createElement(CreateGame_default, {
+  }, /* @__PURE__ */ import_react4.default.createElement(AppContainer, null, /* @__PURE__ */ import_react4.default.createElement(CreateGame_default, {
     handleCreateGame
-  }), isPlayersPartVisible && /* @__PURE__ */ import_react5.default.createElement(PlayersPart_default, null), isWordsPartVisible && /* @__PURE__ */ import_react5.default.createElement(WordsPart_default, {
+  }), isPlayersPartVisible && /* @__PURE__ */ import_react4.default.createElement(PlayersPart_default, null), isWordsPartVisible && /* @__PURE__ */ import_react4.default.createElement(WordsPart_default, {
     setOutgoingWord
   })));
 }
-var AppContainer = import_styled_components5.default.div`
+var AppContainer = import_styled_components6.default.div`
 	display: flex;
 	flex-direction: column;
 	width: 100%;
@@ -216,7 +221,7 @@ var AppContainer = import_styled_components5.default.div`
 var routes_default = App;
 
 // server-assets-manifest:@remix-run/dev/assets-manifest
-var assets_manifest_default = { "version": "860030d9", "entry": { "module": "/build/entry.client-23NI3LXU.js", "imports": ["/build/_shared/chunk-43N2HHHW.js", "/build/_shared/chunk-IYRIQ6PI.js"] }, "routes": { "root": { "id": "root", "parentId": void 0, "path": "", "index": void 0, "caseSensitive": void 0, "module": "/build/root-DL2QEL4P.js", "imports": void 0, "hasAction": false, "hasLoader": false, "hasCatchBoundary": false, "hasErrorBoundary": false }, "routes/index": { "id": "routes/index", "parentId": "root", "path": void 0, "index": true, "caseSensitive": void 0, "module": "/build/routes/index-DWXTB6QO.js", "imports": void 0, "hasAction": false, "hasLoader": false, "hasCatchBoundary": false, "hasErrorBoundary": false } }, "url": "/build/manifest-860030D9.js" };
+var assets_manifest_default = { "version": "19d37068", "entry": { "module": "/build/entry.client-725QT4YR.js", "imports": ["/build/_shared/chunk-YRJAIDWA.js", "/build/_shared/chunk-IYRIQ6PI.js"] }, "routes": { "root": { "id": "root", "parentId": void 0, "path": "", "index": void 0, "caseSensitive": void 0, "module": "/build/root-RZREAMHJ.js", "imports": void 0, "hasAction": false, "hasLoader": false, "hasCatchBoundary": false, "hasErrorBoundary": false }, "routes/index": { "id": "routes/index", "parentId": "root", "path": void 0, "index": true, "caseSensitive": void 0, "module": "/build/routes/index-JBMWZSY5.js", "imports": void 0, "hasAction": false, "hasLoader": false, "hasCatchBoundary": false, "hasErrorBoundary": false } }, "url": "/build/manifest-19D37068.js" };
 
 // server-entry-module:@remix-run/dev/server-build
 var entry = { module: entry_server_exports };

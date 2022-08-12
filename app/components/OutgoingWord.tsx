@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
 interface IProps {
-	setOutgoingWord: (word: string) => void;
 	outgoingWord: string;
+	setOutgoingWord: (word: string) => void;
 }
 const OutgoingWord = (props: IProps) => {
 	return <StyledInput value={props.outgoingWord} onChange={event => props.setOutgoingWord(event.target.value)} />;
