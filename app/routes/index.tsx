@@ -4,6 +4,7 @@ import CreateGame from '../components/CreateGame'
 import WordsPart from '../components/WordsPart'
 import PlayersPart from '../components/PlayersPart'
 import axios from 'axios'
+import { LiveReload } from '@remix-run/react/components'
 
 const user = {
 	name: 'Kata',
@@ -31,8 +32,6 @@ function App() {
 	const [outgoingWord, setOutgoingWord] = useState('')
 	const [sendWordButton, showSendWordButton] = useState(false)
 
-	console.log(outgoingWord)
-
 	useEffect(() => {
 		if (outgoingWord.length > 2) {
 			showSendWordButton(true);
@@ -42,7 +41,7 @@ function App() {
 	const onSendWord = () => {
 		axios
 			.post('http://localhost:8080/word', {
-				params: {
+				body: {
 					userEmail: user.email,
 					opponentEmail: opponent.email,
 					word: outgoingWord,
@@ -72,10 +71,27 @@ const AppContainer = styled.div`
 	display: flex;
 	flex-direction: column;
 	width: 100%;
+	height: 100%;
 	margin-top: 320px;
 `
 
 const SendWordButton = styled.button`
+	margin: auto;
+	padding: 6px 12px;
+	outline: none;
+	border: none;
+	border-radius: 5px;
+	text-align: center;
+	background: #1dd1a1;
+	font-size: 30px;
+	box-shadow: 2px 3px #10ac84;
+	color: #222f3e;
+	font-family: 'Amatic SC', cursive;
+	margin-top: 32px;
+	 :active {
+		background: #10ac84;
+		box-shadow: none;
+	 }
 `
 
 export default App

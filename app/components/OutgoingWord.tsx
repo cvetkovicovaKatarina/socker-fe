@@ -9,11 +9,13 @@ const OutgoingWord = (props: IProps) => {
 };
 
 const StyledInput = styled.input`
-	width: 200px;
+	width: 240px;
 	padding: 6px 12px;
 	outline: none;
 	border-radius: 5px;
-	border: 2px solid #e84118;
+	border: 2px solid #0abde3;
+	font-family: 'Amatic SC', cursive;
+	font-size: 30px;
 	text-align: center;
 `;
 

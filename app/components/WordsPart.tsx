@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { useState } from 'react';
 import styled from 'styled-components';
 import IncomingWord from './IncomingWord';
@@ -21,8 +20,7 @@ const WordPart = (props: IProps) => {
 };
 
 const Container = styled.div`
-	margin-left: auto;
-	margin-right: auto;
+	margin: 32px auto 0 auto;
 `;
 
 export default WordPart;

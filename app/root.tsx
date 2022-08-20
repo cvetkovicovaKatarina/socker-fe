@@ -15,11 +15,14 @@ export default function Root() {
           name="description"
           content="Frontend for the socker."
         />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" />
+        <link href="https://fonts.googleapis.com/css2?family=Amatic+SC&display=swap" rel="stylesheet"/>
         <link rel="apple-touch-icon" href="/logo192.png" />
         <title>Socker-fe</title>
         {typeof document === "undefined" ? "__STYLES__" : null}
       </head>
-      <body>
+      <body style={{ background: "#48dbfb" }}>
         <div id="root">
           <Outlet />
           <Scripts />

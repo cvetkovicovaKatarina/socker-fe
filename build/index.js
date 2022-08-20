@@ -60,7 +60,7 @@ function handleRequest(request, responseStatusCode, responseHeaders, remixContex
   });
 }
 
-// route:/Users/katarinacvetkovicova/workspace/socker-fe/app/root.tsx
+// route:/Users/kata/workspace/socker-fe/app/root.tsx
 var root_exports = {};
 __export(root_exports, {
   default: () => Root
@@ -84,14 +84,25 @@ function Root() {
     name: "description",
     content: "Frontend for the socker."
   }), /* @__PURE__ */ React.createElement("link", {
+    rel: "preconnect",
+    href: "https://fonts.googleapis.com"
+  }), /* @__PURE__ */ React.createElement("link", {
+    rel: "preconnect",
+    href: "https://fonts.gstatic.com"
+  }), /* @__PURE__ */ React.createElement("link", {
+    href: "https://fonts.googleapis.com/css2?family=Amatic+SC&display=swap",
+    rel: "stylesheet"
+  }), /* @__PURE__ */ React.createElement("link", {
     rel: "apple-touch-icon",
     href: "/logo192.png"
-  }), /* @__PURE__ */ React.createElement("title", null, "Socker-fe"), typeof document === "undefined" ? "__STYLES__" : null), /* @__PURE__ */ React.createElement("body", null, /* @__PURE__ */ React.createElement("div", {
+  }), /* @__PURE__ */ React.createElement("title", null, "Socker-fe"), typeof document === "undefined" ? "__STYLES__" : null), /* @__PURE__ */ React.createElement("body", {
+    style: { background: "#48dbfb" }
+  }, /* @__PURE__ */ React.createElement("div", {
     id: "root"
   }, /* @__PURE__ */ React.createElement(import_react.Outlet, null), /* @__PURE__ */ React.createElement(import_react.Scripts, null))));
 }
 
-// route:/Users/katarinacvetkovicova/workspace/socker-fe/app/routes/index.tsx
+// route:/Users/kata/workspace/socker-fe/app/routes/index.tsx
 var routes_exports = {};
 __export(routes_exports, {
   UserContext: () => UserContext,
@@ -108,19 +119,25 @@ var CreateGame = (props) => {
   }, "Create game");
 };
 var StyledButton = import_styled_components2.default.button`
-	margin-left: auto;
-	margin-right: auto;
-	display: block;
-	width: 100px;
+	margin: auto;
 	padding: 6px 12px;
 	outline: none;
+	border: none;
 	border-radius: 5px;
 	text-align: center;
+	background: #ff9ff3;
+	font-size: 30px;
+	box-shadow: 2px 3px #f368e0;
+	color: #222f3e;
+	font-family: 'Amatic SC', cursive;
+	 :active {
+		background: #f368e0;
+		box-shadow: none;
+	 }
 `;
 var CreateGame_default = CreateGame;
 
 // app/components/WordsPart.tsx
-var import_axios = __toESM(require("axios"));
 var import_react2 = require("react");
 var import_styled_components5 = __toESM(require("styled-components"));
 
@@ -141,11 +158,13 @@ var OutgoingWord = (props) => {
   });
 };
 var StyledInput = import_styled_components4.default.input`
-	width: 200px;
+	width: 240px;
 	padding: 6px 12px;
 	outline: none;
 	border-radius: 5px;
-	border: 2px solid #e84118;
+	border: 2px solid #0abde3;
+	font-family: 'Amatic SC', cursive;
+	font-size: 30px;
 	text-align: center;
 `;
 var OutgoingWord_default = OutgoingWord;
@@ -153,30 +172,16 @@ var OutgoingWord_default = OutgoingWord;
 // app/components/WordsPart.tsx
 var WordPart = (props) => {
   const [incomingWord, setIncomingWord] = (0, import_react2.useState)("");
-  const [outgoingWord, setOutgoingWord] = (0, import_react2.useState)("");
-  const onSendWord = (word) => {
-    import_axios.default.post("http://localhost:8080/word", {
-      params: {
-        userId: 1234,
-        word
-      }
-    }).then(function(response) {
-      setOutgoingWord(word);
-    }).catch(function(error) {
-      console.log(error);
-    });
-  };
   return /* @__PURE__ */ React.createElement(Container, null, incomingWord && /* @__PURE__ */ React.createElement(IncomingWord_default, {
     setIncomingWord,
     incomingWord
   }), /* @__PURE__ */ React.createElement(OutgoingWord_default, {
-    setOutgoingWord,
-    outgoingWord
+    setOutgoingWord: props.setOutgoingWord,
+    outgoingWord: props.outgoingWord
   }));
 };
 var Container = import_styled_components5.default.div`
-	margin-left: auto;
-	margin-right: auto;
+	margin: 32px auto 0 auto;
 `;
 var WordsPart_default = WordPart;
 
@@ -187,7 +192,15 @@ var PlayersPart = () => {
 };
 var PlayersPart_default = PlayersPart;
 
-// route:/Users/katarinacvetkovicova/workspace/socker-fe/app/routes/index.tsx
+// route:/Users/kata/workspace/socker-fe/app/routes/index.tsx
+var import_axios = __toESM(require("axios"));
+var user = {
+  name: "Kata",
+  email: "katarina.cvetkovicova@gmail.com"
+};
+var opponent = {
+  email: "matejstrnad@icloud.com"
+};
 var initialUserContext = {
   userName: ""
 };
@@ -196,32 +209,66 @@ var UserContext = import_react4.default.createContext(userContext);
 function App() {
   const [isWordsPartVisible, setIsWordsPartVisible] = (0, import_react4.useState)(false);
   const [isPlayersPartVisible, setIsPlayersPartVisible] = (0, import_react4.useState)(false);
-  const [outGoingWord, setOutGoingWord] = (0, import_react4.useState)("");
-  const [outIncomingWord, setOutIncomingWord] = (0, import_react4.useState)("");
-  const setOutgoingWord = (word) => {
-  };
-  const handleCreateGame = () => {
-    setIsWordsPartVisible(true);
-    console.log("deje se to");
+  const [outgoingWord, setOutgoingWord] = (0, import_react4.useState)("");
+  const [sendWordButton, showSendWordButton] = (0, import_react4.useState)(false);
+  (0, import_react4.useEffect)(() => {
+    if (outgoingWord.length > 2) {
+      showSendWordButton(true);
+    }
+  }, [outgoingWord]);
+  const onSendWord = () => {
+    import_axios.default.post("http://localhost:8080/word", {
+      body: {
+        userEmail: user.email,
+        opponentEmail: opponent.email,
+        word: outgoingWord
+      }
+    }).then(function(response) {
+      console.log(response);
+    }).catch(function(error) {
+      console.log(error);
+    });
   };
   return /* @__PURE__ */ import_react4.default.createElement(UserContext.Provider, {
     value: userContext
   }, /* @__PURE__ */ import_react4.default.createElement(AppContainer, null, /* @__PURE__ */ import_react4.default.createElement(CreateGame_default, {
-    handleCreateGame
+    handleCreateGame: () => setIsWordsPartVisible(true)
   }), isPlayersPartVisible && /* @__PURE__ */ import_react4.default.createElement(PlayersPart_default, null), isWordsPartVisible && /* @__PURE__ */ import_react4.default.createElement(WordsPart_default, {
+    outgoingWord,
     setOutgoingWord
-  })));
+  }), sendWordButton && /* @__PURE__ */ import_react4.default.createElement(SendWordButton, {
+    onClick: onSendWord
+  }, "Send")));
 }
 var AppContainer = import_styled_components6.default.div`
 	display: flex;
 	flex-direction: column;
 	width: 100%;
+	height: 100%;
 	margin-top: 320px;
+`;
+var SendWordButton = import_styled_components6.default.button`
+	margin: auto;
+	padding: 6px 12px;
+	outline: none;
+	border: none;
+	border-radius: 5px;
+	text-align: center;
+	background: #1dd1a1;
+	font-size: 30px;
+	box-shadow: 2px 3px #10ac84;
+	color: #222f3e;
+	font-family: 'Amatic SC', cursive;
+	margin-top: 32px;
+	 :active {
+		background: #10ac84;
+		box-shadow: none;
+	 }
 `;
 var routes_default = App;
 
 // server-assets-manifest:@remix-run/dev/assets-manifest
-var assets_manifest_default = { "version": "19d37068", "entry": { "module": "/build/entry.client-725QT4YR.js", "imports": ["/build/_shared/chunk-YRJAIDWA.js", "/build/_shared/chunk-IYRIQ6PI.js"] }, "routes": { "root": { "id": "root", "parentId": void 0, "path": "", "index": void 0, "caseSensitive": void 0, "module": "/build/root-RZREAMHJ.js", "imports": void 0, "hasAction": false, "hasLoader": false, "hasCatchBoundary": false, "hasErrorBoundary": false }, "routes/index": { "id": "routes/index", "parentId": "root", "path": void 0, "index": true, "caseSensitive": void 0, "module": "/build/routes/index-JBMWZSY5.js", "imports": void 0, "hasAction": false, "hasLoader": false, "hasCatchBoundary": false, "hasErrorBoundary": false } }, "url": "/build/manifest-19D37068.js" };
+var assets_manifest_default = { "version": "6b56b57d", "entry": { "module": "/build/entry.client-725QT4YR.js", "imports": ["/build/_shared/chunk-YRJAIDWA.js", "/build/_shared/chunk-IYRIQ6PI.js"] }, "routes": { "root": { "id": "root", "parentId": void 0, "path": "", "index": void 0, "caseSensitive": void 0, "module": "/build/root-IR7DAHMY.js", "imports": void 0, "hasAction": false, "hasLoader": false, "hasCatchBoundary": false, "hasErrorBoundary": false }, "routes/index": { "id": "routes/index", "parentId": "root", "path": void 0, "index": true, "caseSensitive": void 0, "module": "/build/routes/index-QZAT4IG2.js", "imports": void 0, "hasAction": false, "hasLoader": false, "hasCatchBoundary": false, "hasErrorBoundary": false } }, "url": "/build/manifest-6B56B57D.js" };
 
 // server-entry-module:@remix-run/dev/server-build
 var entry = { module: entry_server_exports };
